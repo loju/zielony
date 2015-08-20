@@ -32,9 +32,11 @@ class StartQT4(QtGui.QMainWindow):
         self.vals=[]
         email = self.ui.tableWidget.item(row,0).text()
         dtf = self.ui.tableWidget.item(row,1).text()
+        serial = self.ui.tableWidget.item(row,2).text()
         date = QtCore.QDate(int(dtf[:4]), int(dtf[5:7]), int(dtf[8:10]))
         self.vals.append(str(email))
         self.vals.append(date)
+        self.vals.append(serial)
         self.edit = EditDialog(self.vals)
         self.edit.show()
 
@@ -49,19 +51,20 @@ class StartQT4(QtGui.QMainWindow):
             cursor = cnx.cursor()
             mail_to_search = '%' + self.ui.lineEdit.text() + '%'
             query = (
-                "SELECT user_mail, license_end FROM serials WHERE user_mail LIKE '%s' ORDER BY id"
+                "SELECT user_mail, license_end, serial_number FROM serials WHERE user_mail LIKE '%s' ORDER BY id"
                 ) % mail_to_search
             cursor.execute(query)
             fetchall = cursor.fetchall()
-            self.ui.tableWidget.setColumnCount(2)
+            self.ui.tableWidget.setColumnCount(3)
             self.ui.tableWidget.setRowCount(cursor.rowcount)
-            self.ui.tableWidget.setHorizontalHeaderLabels(["E-mail", "Licencja"])
-            self.ui.tableWidget.setColumnWidth(0, 500)
-            self.ui.tableWidget.setColumnWidth(1, 201)
-            for idx, (user_mail, license_end) in enumerate(fetchall):
+            self.ui.tableWidget.setHorizontalHeaderLabels(["E-mail", "Licencja", "Serial"])
+            self.ui.tableWidget.setColumnWidth(0, 300)
+            self.ui.tableWidget.setColumnWidth(1, 151)
+            self.ui.tableWidget.setColumnWidth(2, 250)
+            for idx, (user_mail, license_end, serial_number) in enumerate(fetchall):
                 self.ui.tableWidget.setItem(idx,0,QtGui.QTableWidgetItem(user_mail))
                 self.ui.tableWidget.setItem(idx,1,QtGui.QTableWidgetItem(str(license_end)))
-
+                self.ui.tableWidget.setItem(idx,2,QtGui.QTableWidgetItem(serial_number))
             cursor.close()
 
         except Error as err:
@@ -76,12 +79,13 @@ class StartQT4(QtGui.QMainWindow):
 
 
 class EditDialog(QtGui.QDialog, Ui_Dialog):
-    def __init__(self, vals=['dsa'], parent=None):
+    def __init__(self, vals, parent=None):
         QtGui.QDialog.__init__(self, parent)
         self.vals=vals
         self.setupUi(self)
         self.label.setText(self.vals[0])
         self.dateEdit_2.setDate(self.vals[1])
+        self.serial_label.setText(self.vals[2])
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), self.ok_clicked)
         QtCore.QObject.connect(self.delButton, QtCore.SIGNAL("clicked()"), self.del_clicked)
 

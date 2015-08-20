@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'edit_dialog.ui'
 #
-# Created: Thu Aug 20 13:42:43 2015
+# Created: Thu Aug 20 18:20:55 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -65,6 +65,13 @@ class Ui_Dialog(object):
         self.delButton.setStyleSheet(_fromUtf8("background-color: rgb(255, 0, 0);\n"
 "color: rgb(255, 255, 255);"))
         self.delButton.setObjectName(_fromUtf8("delButton"))
+        self.serial_label = QtGui.QLabel(Dialog)
+        self.serial_label.setGeometry(QtCore.QRect(25, 70, 351, 31))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Arial"))
+        self.serial_label.setFont(font)
+        self.serial_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.serial_label.setObjectName(_fromUtf8("serial_label"))
 
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)
@@ -76,4 +83,5 @@ class Ui_Dialog(object):
         self.label.setText(_translate("Dialog", "Imię Nazwisko", None))
         self.dateEdit_2.setDisplayFormat(_translate("Dialog", "yyyy-MM-dd", None))
         self.delButton.setText(_translate("Dialog", "USUŃ", None))
+        self.serial_label.setText(_translate("Dialog", "Serial", None))
 
