@@ -83,6 +83,7 @@ class EditDialog(QtGui.QDialog, Ui_Dialog):
         self.label.setText(self.vals[0])
         self.dateEdit_2.setDate(self.vals[1])
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), self.ok_clicked)
+        QtCore.QObject.connect(self.delButton, QtCore.SIGNAL("clicked()"), self.del_clicked)
 
 
     def ok_clicked(self):
@@ -122,6 +123,43 @@ class EditDialog(QtGui.QDialog, Ui_Dialog):
         finally:
             cny.close()
 
+    def del_clicked(self):
+        self.close()
+        try:
+            cny = connection.MySQLConnection(
+                user=settings['user'],
+                password=settings['password'],
+                host=settings['host'],
+                database=settings['database']
+            )
+            cursor = cny.cursor()
+            data = '%s-%s-%s' % (
+                (int(QtCore.QDate.year(self.dateEdit_2.date()))),
+                (int(QtCore.QDate.month(self.dateEdit_2.date()))),
+                (int(QtCore.QDate.day(self.dateEdit_2.date()))),
+            )
+            user_mail=self.label.text()
+            query = (
+                "DELETE FROM serials WHERE user_mail='%s'"
+                ) % (user_mail)
+            cursor.execute(query)
+            msgBox=QtGui.QMessageBox()
+            msg = 'Licencja Użytkownika została pomyślnie usunięta'
+            msg_more = 'Użytkownik: <b>%s</b>' % (
+                user_mail
+                )
+            msgBox.setText(msg)
+            msgBox.setInformativeText(msg_more)
+            msgBox.exec_()
+        except Error as err:
+            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+                print("Something is wrong with your user name or password")
+            elif err.errno == errorcode.ER_BAD_DB_ERROR:
+                print("Database does not exist")
+            else:
+                print(err)
+        finally:
+            cny.close()
 
     def on_rejectButton_clicked(self):
         self.close()

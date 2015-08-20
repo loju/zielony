@@ -55,7 +55,7 @@ class Ui_Form(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
-        Form.setWindowTitle(_translate("Form", "Aktualizacja licencji Pen-Asystent Zielony", None))
+        Form.setWindowTitle(_translate("Form", "Zarządzanie licencjami Pen-Asystent Zielony", None))
         self.pushButton.setText(_translate("Form", "szukaj", None))
         self.label.setText(_translate("Form", "Wpisz szukany adres e-mail", None))
 

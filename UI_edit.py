@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'edit_dialog.ui'
 #
-# Created: Mon Aug 10 18:50:30 2015
+# Created: Thu Aug 20 13:42:43 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -54,6 +54,17 @@ class Ui_Dialog(object):
         self.dateEdit_2.setDateTime(QtCore.QDateTime(QtCore.QDate(2016, 1, 2), QtCore.QTime(0, 0, 0)))
         self.dateEdit_2.setCalendarPopup(True)
         self.dateEdit_2.setObjectName(_fromUtf8("dateEdit_2"))
+        self.delButton = QtGui.QPushButton(Dialog)
+        self.delButton.setGeometry(QtCore.QRect(20, 230, 111, 41))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Arial"))
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        self.delButton.setFont(font)
+        self.delButton.setStyleSheet(_fromUtf8("background-color: rgb(255, 0, 0);\n"
+"color: rgb(255, 255, 255);"))
+        self.delButton.setObjectName(_fromUtf8("delButton"))
 
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)
@@ -64,4 +75,5 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_translate("Dialog", "Dialog", None))
         self.label.setText(_translate("Dialog", "Imię Nazwisko", None))
         self.dateEdit_2.setDisplayFormat(_translate("Dialog", "yyyy-MM-dd", None))
+        self.delButton.setText(_translate("Dialog", "USUŃ", None))
 
